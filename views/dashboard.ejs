@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Hệ thống nạp tiền tranh đấu BOOYAH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "booyah-primary": "#FF4757",
+              "booyah-secondary": "#1e3a8a",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50 flex flex-col min-h-screen p-4 sm:p-10">
+    <main
+      class="flex-grow flex flex-col sm:flex-row items-start justify-center gap-6"
+    >
+      <!-- Cột trái: Bảng xếp hạng ảo -->
+      <div
+        class="w-full sm:w-1/4 bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 max-h-[600px] overflow-y-auto"
+      >
+        <h3 class="text-xl font-bold mb-4 text-booyah-secondary">
+          Bảng xếp hạng
+        </h3>
+        <ul class="space-y-2">
+          <% const fakeRankings = [ { username: "An béo", balance: 100000000000
+          }, { username:"Lợi Nig", balance: 5000000 }, { username: "Huy Popper",
+          balance: 3000000 }, { username: "Lan", balance: 2000000 }, { username:
+          "Nam", balance: 1000000 },{ username: "Lan", balance: 1000000 },{
+          username: "Kiên", balance: 1000000 },{ username: "Mèo simmy", balance:
+          1000000 },{ username: "Anh negev", balance: 100000 } ]; %> <%
+          fakeRankings.forEach((user, index) => { %>
+          <li
+            class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 transition"
+          >
+            <span class="font-medium"
+              ><%= index + 1 %>. <%= user.username %></span
+            >
+            <span class="font-bold text-green-600"
+              ><%= user.balance.toLocaleString('vi-VN') %> VND</span
+            >
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <!-- Cột giữa: Card chính giữ nguyên tất cả CSS -->
+      <div class="w-full sm:w-1/2">
+        <div
+          class="w-full max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-2xl border border-gray-100 text-center transform transition duration-500 hover:shadow-3xl"
+        >
+          <!-- Giữ nguyên toàn bộ nội dung card của bạn -->
+          <h2 class="text-3xl font-extrabold mb-8 text-booyah-secondary">
+            Hệ thống nạp tiền Tranh Top
+            <span class="text-booyah-primary">BOOYAH</span>
+          </h2>
+
+          <div class="flex flex-col items-center mb-6">
+            <div
+              class="mb-4 p-2 bg-gray-100 rounded-full shadow-inner transform transition duration-500 hover:scale-105"
+            >
+              <% if(balance >= 60000){ %>
+              <img
+                src="/images/rank6.png"
+                alt="Rank Chiến Thần"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else if(balance >= 50000){ %>
+              <img
+                src="/images/rank5.png"
+                alt="Rank Huyền Thoại"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else if(balance >= 40000){ %>
+              <img
+                src="/images/rank4.png"
+                alt="Rank Kim Cương"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else if(balance >= 30000){ %>
+              <img
+                src="/images/rank3.png"
+                alt="Rank Vàng"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else if(balance >= 20000){ %>
+              <img
+                src="/images/rank2.png"
+                alt="Rank Bạc"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else if(balance >= 10000){ %>
+              <img
+                src="/images/rank1.png"
+                alt="Rank Đồng"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } else { %>
+              <img
+                src="/images/rank0.png"
+                alt="Rank 0"
+                class="mx-auto w-36 h-36 rounded-full object-cover"
+              />
+              <% } %>
+            </div>
+
+            <div
+              class="p-3 bg-booyah-primary text-white rounded-lg shadow-md w-full max-w-xs"
+            >
+              <p class="text-base font-medium opacity-90">Rank hiện tại:</p>
+              <p class="text-2xl font-extrabold tracking-wider">
+                <% if(balance >= 60000){ %> Đại cao thủ <% } else if(balance >=
+                50000){ %> Huyền Thoại <% } else if(balance >= 40000){ %> Kim
+                Cương <% } else if(balance >= 30000){ %> Vàng <% } else
+                if(balance >= 20000){ %> Bạc <% } else if(balance >= 10000){ %>
+                Đồng <% } else { %> Sơ Cấp <% } %>
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-indigo-50 p-4 rounded-xl mb-8 border-l-4 border-booyah-secondary"
+          >
+            <p class="text-xl text-gray-700">
+              Số dư hiện tại:
+              <span
+                class="font-black text-3xl text-green-600 ml-2 animate-pulse inline-block"
+              >
+                <%= balance.toLocaleString('vi-VN') %> VND
+              </span>
+            </p>
+          </div>
+
+          <div class="flex justify-center space-x-4">
+            <a
+              href="/deposit"
+              class="bg-booyah-primary text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300"
+            >
+              Nạp tiền ngay
+            </a>
+            <a
+              href="/"
+              class="bg-gray-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300"
+            >
+              Đăng xuất
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột phải: Vùng chèn ảnh -->
+      <div
+        class="w-full sm:w-1/4 bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 max-h-[600px] flex items-center justify-center"
+      >
+        <span class="text-gray-400">
+          <img src="./images/ranklist.png" />
+        </span>
+      </div>
+    </main>
+
+    <footer
+      class="mt-8 pt-4 border-t border-gray-200 text-center text-gray-500 text-sm"
+    >
+      <p>Bản quyền &copy; 2025 BOOYAH Nạp Tiền. Mọi quyền được bảo lưu.</p>
+      <div class="mt-1 space-x-4">
+        <a
+          href="/terms"
+          class="hover:text-booyah-primary transition duration-200"
+          >Điều khoản dịch vụ</a
+        >
+        <span class="text-gray-300">|</span>
+        <a
+          href="/privacy"
+          class="hover:text-booyah-primary transition duration-200"
+          >Chính sách bảo mật</a
+        >
+      </div>
+    </footer>
+
+    <style>
+      .shadow-3xl {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+      /* Tailwind's built-in animate-pulse works fine, but a custom one can be smoother */
+      /* You can remove this style block if you only use standard Tailwind classes */
+    </style>
+  </body>
+</html>

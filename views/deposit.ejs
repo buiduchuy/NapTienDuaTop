@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nạp tiền Tranh Đấu - BOOYAH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Định nghĩa màu sắc thương hiệu cho Tailwind
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "booyah-primary": "#FF4757", // Đỏ/Hồng nổi bật
+              "booyah-secondary": "#1e3a8a", // Xanh đậm
+            },
+            boxShadow: {
+              "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gray-50 flex flex-col items-center justify-center min-h-screen p-4"
+  >
+    <div
+      class="max-w-6xl w-full mx-auto flex-grow flex flex-col justify-center"
+    >
+      <h1
+        class="text-4xl font-extrabold text-center mb-8 text-booyah-secondary"
+      >
+        💰 <span class="text-booyah-primary">Nạp Tiền</span> vào Tài Khoản
+      </h1>
+
+      <div
+        class="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8 items-stretch justify-center"
+      >
+        <form
+          id="depositForm"
+          class="bg-white p-8 rounded-2xl shadow-xl w-full lg:w-1/2 transition duration-500 hover:shadow-2xl border-t-4 border-booyah-primary"
+        >
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">
+            1. Nhập Số Tiền Nạp
+          </h2>
+
+          <div class="mb-4">
+            <label
+              for="amount"
+              class="block text-left text-sm font-medium text-gray-700 mb-1"
+              >Số tiền (VND):</label
+            >
+            <input
+              type="number"
+              id="amount"
+              placeholder="Ví dụ: 50000"
+              min="1000"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-booyah-primary focus:border-booyah-primary transition duration-200 text-lg"
+              required
+            />
+          </div>
+
+          <p class="text-xs text-gray-500 text-left mb-6">
+            *Số tiền tối thiểu là <span class="font-bold">1.000 VND</span>.
+          </p>
+
+          <button
+            type="submit"
+            class="w-full bg-booyah-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-red-300 text-lg"
+          >
+            Tạo Mã QR Thanh Toán
+          </button>
+
+          <a
+            href="/dashboard"
+            class="block mt-4 text-center text-sm text-gray-500 hover:text-booyah-secondary transition duration-200"
+          >
+            &larr; Quay lại Dashboard
+          </a>
+        </form>
+
+        <div
+          id="qrBox"
+          class="bg-white p-8 rounded-2xl shadow-xl w-full lg:w-1/2 text-center border-t-4 border-booyah-secondary transition duration-500 opacity-0 hidden flex flex-col justify-between"
+        >
+          <div>
+            <h2
+              class="text-2xl font-bold mb-4 text-booyah-secondary animate-pulse"
+            >
+              2. Quét Mã Thanh Toán
+            </h2>
+
+            <p class="text-sm text-gray-600 mb-4">
+              Sử dụng ứng dụng ngân hàng của bạn để quét mã QR bên dưới.
+            </p>
+
+            <div class="p-2 bg-gray-100 rounded-lg inline-block shadow-md">
+              <img
+                id="qrImage"
+                src=""
+                alt="QR Code"
+                class="mx-auto w-72 h-72 border-4 border-white rounded transition-opacity duration-500"
+              />
+            </div>
+
+            <div
+              class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200"
+            >
+              <p class="font-semibold text-sm text-yellow-700 mb-1">
+                LƯU Ý QUAN TRỌNG:
+              </p>
+              <p class="text-sm text-gray-700">
+                Nội dung chuyển khoản mặc định:
+                <span id="depositDes" class="font-bold text-booyah-primary"
+                  >SEVQR</span
+                >
+              </p>
+              <p class="text-sm text-gray-700">
+                Số tài khoản:
+                <span id="depositAcc" class="font-bold text-booyah-primary"
+                  >888845515555</span
+                >
+                (Vietinbank)
+              </p>
+            </div>
+
+            <p class="mt-4 text-sm font-medium text-green-600">
+              Vui lòng chờ <span class="font-bold">1–5 phút</span> để hệ thống
+              tự động cộng tiền sau khi quét thành công.
+            </p>
+          </div>
+
+          <button
+            id="confirmDepositBtn"
+            type="button"
+            class="w-full mt-6 bg-green-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-green-300 text-lg animate-pulse"
+          >
+            Xác nhận Đã Nạp Tiền
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer
+      class="mt-12 w-full max-w-6xl pt-4 border-t border-gray-200 text-center text-gray-500 text-sm"
+    >
+      <p>Bản quyền &copy; 2025 BOOYAH Nạp Tiền. Mọi quyền được bảo lưu.</p>
+      <div class="mt-1 space-x-4">
+        <a
+          href="/terms"
+          class="hover:text-booyah-primary transition duration-200"
+          >Điều khoản dịch vụ</a
+        >
+        <span class="text-gray-300">|</span>
+        <a
+          href="/privacy"
+          class="hover:text-booyah-primary transition duration-200"
+          >Chính sách bảo mật</a
+        >
+      </div>
+    </footer>
+
+    <script>
+      const form = document.getElementById("depositForm");
+      const qrBox = document.getElementById("qrBox");
+      const qrImage = document.getElementById("qrImage");
+      const amountInput = document.getElementById("amount");
+      const createQrButton = form.querySelector("button");
+      const confirmDepositBtn = document.getElementById("confirmDepositBtn");
+
+      const acc = "888845515555";
+      const bank = "Vietinbank";
+      const des = "SEVQR";
+      const MIN_AMOUNT = 1000;
+
+      document.getElementById("depositAcc").textContent = acc + " (Vietinbank)";
+      document.getElementById("depositDes").textContent = des;
+
+      // --- HÀM XỬ LÝ HIỂN THỊ QR ---
+      function showQRBox() {
+        qrBox.classList.remove("hidden");
+        // Kích hoạt hiệu ứng fade-in
+        setTimeout(() => {
+          qrBox.classList.add("opacity-100");
+        }, 50);
+
+        // Cập nhật trạng thái Form
+        amountInput.disabled = true;
+        createQrButton.textContent = "Thay đổi số tiền";
+        createQrButton.classList.remove(
+          "bg-booyah-primary",
+          "hover:bg-red-600"
+        );
+        createQrButton.classList.add("bg-gray-500", "hover:bg-gray-600");
+      }
+
+      // --- HÀM XỬ LÝ ẨN QR ---
+      function hideQRBox() {
+        // Tắt hiệu ứng fade-out
+        qrBox.classList.remove("opacity-100");
+
+        setTimeout(() => {
+          qrBox.classList.add("hidden");
+        }, 300);
+
+        // Cập nhật trạng thái Form
+        amountInput.disabled = false;
+        createQrButton.textContent = "Tạo Mã QR Thanh Toán";
+        createQrButton.classList.remove("bg-gray-500", "hover:bg-gray-600");
+        createQrButton.classList.add("bg-booyah-primary", "hover:bg-red-600");
+      }
+
+      // --- EVENT LISTENER CHO FORM (TẠO/THAY ĐỔI QR) ---
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const amount = amountInput.value;
+
+        if (parseInt(amount) < MIN_AMOUNT) {
+          alert(
+            `Số tiền nạp tối thiểu là ${MIN_AMOUNT.toLocaleString(
+              "vi-VN"
+            )} VND.`
+          );
+          return;
+        }
+
+        if (!amountInput.disabled) {
+          // Lần đầu tạo QR
+          const url = `https://qr.sepay.vn/img?acc=${acc}&bank=${bank}&amount=${amount}&des=${des}`;
+          qrImage.src = url;
+          showQRBox();
+        } else {
+          // Thay đổi số tiền
+          hideQRBox();
+        }
+      });
+
+      // --- EVENT LISTENER CHO NÚT XÁC NHẬN CUỐI CÙNG ---
+      confirmDepositBtn.addEventListener("click", function () {
+        confirmDepositBtn.textContent = "Đang xử lý...";
+        confirmDepositBtn.classList.remove("animate-pulse");
+
+        setTimeout(() => {
+          alert(
+            `✅ Yêu cầu nạp tiền đã được ghi nhận. Vui lòng chờ 1 đến 5 phút để hệ thống xác nhận thành công.`
+          );
+          window.location.href = "/dashboard";
+        }, 500);
+      });
+
+      // Thiết lập ban đầu
+      qrBox.classList.add("opacity-0");
+    </script>
+  </body>
+</html>

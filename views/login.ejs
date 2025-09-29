@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - BOOYAH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Định nghĩa màu sắc thương hiệu cho Tailwind
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "booyah-primary": "#FF4757", // Đỏ/Hồng nổi bật
+              "booyah-secondary": "#1e3a8a", // Xanh đậm
+            },
+            boxShadow: {
+              "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gray-50 flex flex-col items-center justify-center min-h-screen p-4"
+  >
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-6">
+        <h1 class="text-4xl font-extrabold text-booyah-secondary">
+          Chào mừng đến với <span class="text-booyah-primary">BOOYAH</span>
+        </h1>
+        <p class="text-gray-500 mt-2">Vui lòng đăng nhập để tiếp tục</p>
+      </div>
+
+      <form
+        action="/auth/login"
+        method="post"
+        class="bg-white p-8 rounded-2xl shadow-2xl w-full border-t-4 border-booyah-primary transform transition duration-300 hover:shadow-3xl"
+      >
+        <h2 class="text-3xl font-bold mb-6 text-center text-booyah-secondary">
+          Đăng nhập
+        </h2>
+
+        <div class="mb-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Tài khoản"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-booyah-primary focus:border-booyah-primary transition duration-200"
+            required
+          />
+        </div>
+
+        <div class="mb-6">
+          <input
+            type="password"
+            name="password"
+            placeholder="Mật khẩu"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-booyah-primary focus:border-booyah-primary transition duration-200"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-booyah-primary text-white font-bold py-3 rounded-lg shadow-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-red-300 text-lg"
+        >
+          Đăng nhập
+        </button>
+
+        <div class="mt-4 text-center text-sm">
+          <a
+            href="https://www.facebook.com/sad.ray.353/"
+            class="text-booyah-secondary hover:text-booyah-primary font-medium transition duration-200"
+          >
+            Chưa có tài khoản? Nhắn thằng admin nhé :))
+          </a>
+          <span class="text-gray-400 mx-2">|</span>
+          <a
+            href="https://www.facebook.com/sad.ray.353/"
+            class="text-gray-500 hover:text-booyah-secondary transition duration-200"
+          >
+            Quên mật khẩu?
+          </a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
